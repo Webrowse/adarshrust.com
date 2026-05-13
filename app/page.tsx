@@ -8,11 +8,16 @@ import { StatusBar } from '@/components/ui/StatusBar';
 const Scene = dynamic(() => import('@/components/Scene').then((m) => m.Scene), {
   ssr: false,
 });
+const LoadingScreen = dynamic(
+  () => import('@/components/LoadingScreen').then((m) => m.LoadingScreen),
+  { ssr: false },
+);
 
 export default function HomePage() {
   return (
     <main>
       <Scene />
+      <LoadingScreen />
 
       {/* Tall scrollable area so Lenis has somewhere to go.
           Visible content is fixed; this just provides scroll length to drive gears. */}

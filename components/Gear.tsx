@@ -32,10 +32,10 @@ export function Gear({ size, position, speed = 1, phase = 0 }: Props) {
 
   const { scene } = useGLTF(GLB_MAP[size]);
   const [basecolor, normal, roughness, metallic] = useTexture([
-    '/textures/gear_basecolor.png',
-    '/textures/gear_normal.png',
-    '/textures/gear_roughness.png',
-    '/textures/gear_metallic.png',
+    '/textures/gear_basecolor.webp',
+    '/textures/gear_normal.webp',
+    '/textures/gear_roughness.webp',
+    '/textures/gear_metallic.webp',
   ]);
 
   useEffect(() => {
