@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Orbitron', system-ui;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: var(--font-geist-sans, system-ui);
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #0a0807;
+  color: #d4c5b0;
+  overflow-x: hidden;
+}
+
+/* prevent Lenis from breaking on mobile */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* === ADARSHRUST forged metal title === */
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(56px, 9.5vw, 156px);
+  letter-spacing: 0.14em;
+  line-height: 1;
+  text-transform: uppercase;
+  background: linear-gradient(
+    180deg,
+    #6b5a47 0%,
+    #d8b88a 28%,
+    #f2c897 38%,
+    #8a6a4a 58%,
+    #3a2a1c 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 170, 100, 0.18);
+  filter: drop-shadow(0 0 22px rgba(255, 90, 20, 0.18))
+    drop-shadow(0 2px 0 rgba(0, 0, 0, 0.8));
+  position: relative;
+}
+.hero-title::after {
+  /* faint inner heat shimmer */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 65%,
+    rgba(255, 90, 20, 0.12) 0%,
+    transparent 60%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.hero-sub {
+  font-family: var(--font-mono);
+  letter-spacing: 0.42em;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #7e6a52;
+}
+
+/* === Portal cards === */
+.portal-card {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(28, 22, 16, 0.72) 0%,
+    rgba(14, 10, 7, 0.88) 100%
+  );
+  border: 1px solid rgba(170, 120, 70, 0.18);
+  border-top: 1px solid rgba(255, 140, 60, 0.45);
+  border-radius: 2px;
+  padding: 18px 12px 16px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+  transition: transform 220ms ease, border-color 220ms ease,
+    box-shadow 220ms ease, background 220ms ease;
+  overflow: hidden;
+}
+.portal-card::before {
+  /* hot-metal sheen */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 140, 60, 0.07) 0%,
+    transparent 30%
+  );
+  pointer-events: none;
+}
+.portal-card::after {
+  /* faint bottom warm rim */
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 110, 30, 0.45) 50%,
+    transparent 100%
+  );
+  opacity: 0.55;
+}
+.portal-card:hover {
+  border-color: rgba(255, 140, 60, 0.62);
+  box-shadow: 0 0 28px rgba(255, 100, 30, 0.18),
+    inset 0 0 22px rgba(255, 100, 30, 0.06);
+  transform: translateY(-3px);
+  background: linear-gradient(
+    180deg,
+    rgba(40, 30, 22, 0.78) 0%,
+    rgba(18, 12, 8, 0.92) 100%
+  );
+}
+.portal-card .num {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: #ff8a3a;
+  margin-bottom: 6px;
+}
+.portal-card .title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: #d4c5b0;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.portal-card .desc {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  color: #7c6a55;
+  line-height: 1.35;
+}
+.portal-card .icon-wrap {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 10px;
+  color: #f0a85a;
+  filter: drop-shadow(0 0 6px rgba(255, 120, 40, 0.35));
+}
+
+/* === Status / nav bars === */
+.terminal-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #7e6a52;
+}
+.live-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: #5cff8a;
+  border-radius: 50%;
+  box-shadow: 0 0 7px #5cff8a;
+  vertical-align: middle;
+  margin-right: 8px;
+  animation: live-blink 2.4s ease-in-out infinite;
+}
+@keyframes live-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+/* === Film grain overlay === */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+/* === scroll indicator === */
+.scroll-cue {
+  position: fixed;
+  bottom: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.42em;
+  color: #6a5a44;
+  text-transform: uppercase;
+  pointer-events: none;
+  z-index: 5;
+}
+.scroll-cue .mouse {
+  width: 18px;
+  height: 28px;
+  border: 1px solid #6a5a44;
+  border-radius: 9px;
+  margin: 0 auto 10px;
+  position: relative;
+}
+.scroll-cue .mouse::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 6px;
+  background: #ff8a3a;
+  border-radius: 1px;
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 1; transform: translate(-50%, 0); }
+  50% { opacity: 0.4; transform: translate(-50%, 8px); }
+}
+
+/* nav link hover */
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #8a7560;
+  transition: color 200ms ease;
+}
+.nav-link:hover { color: #ff8a3a; }
