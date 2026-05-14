@@ -28,7 +28,6 @@ type Props = {
 
 export function Gear({ size, position, speed = 1, phase = 0 }: Props) {
   const ref = useRef<THREE.Group>(null);
-  const targetRotation = useRef(0);
 
   const { scene } = useGLTF(GLB_MAP[size]);
   const [basecolor, normal, roughness, metallic] = useTexture([
@@ -58,10 +57,20 @@ export function Gear({ size, position, speed = 1, phase = 0 }: Props) {
     return m;
   }, [basecolor, normal, roughness, metallic]);
 
-  // Apply material to every mesh in the glb scene
+  // Apply material to every mesh in the glb scene.
+  // The exported GLB nodes carry residual translation/rotation from the
+  // Blender staging scene (e.g. the large gear node has translation
+  // [-2.4, 0, -1.3] + a 90° rotation baked in). If we don't strip these,
+  // the outer group's rotation.z makes the mesh ORBIT around an offset
+  // pivot instead of spinning on its own axis — the "gears flying everywhere"
+  // bug. Mesh vertices are already centered on origin in the GLB, so
+  // zeroing every node's transform is safe.
   const gearScene = useMemo(() => {
     const clone = scene.clone(true);
     clone.traverse((c) => {
+      c.position.set(0, 0, 0);
+      c.quaternion.identity();
+      c.scale.set(1, 1, 1);
       if ((c as THREE.Mesh).isMesh) {
         const mesh = c as THREE.Mesh;
         mesh.material = material;
@@ -74,17 +83,21 @@ export function Gear({ size, position, speed = 1, phase = 0 }: Props) {
 
   useFrame(() => {
     if (!ref.current) return;
-    const scroll = useScrollStore.getState().scroll;
-    // 8 full rotations across an entire scroll height of 4000px feels right
-    targetRotation.current = (scroll / 4000) * Math.PI * 8 * speed + phase;
-    const current = ref.current.rotation.z;
-    // heavy inertia — gear "catches up" to target with damping
-    ref.current.rotation.z = current + (targetRotation.current - current) * 0.07;
+    const progress = useScrollStore.getState().progress;
+    // RIGID 1:1 coupling — every increment of scroll progress maps directly to rotation.
+    // BASE_REVS = how many full revolutions the LARGE gear makes from top to bottom of page.
+    const BASE_REVS = 3.5;
+    ref.current.rotation.z = progress * Math.PI * 2 * BASE_REVS * speed + phase;
   });
 
   return (
     <group ref={ref} position={position}>
-      <primitive object={gearScene} />
+      {/* Inner group reorients the gear face from glTF's XZ plane to the XY
+          plane so it faces the +Z camera. The outer group's rotation.z then
+          spins the gear cleanly around its own axle. */}
+      <group rotation={[Math.PI / 2, 0, 0]}>
+        <primitive object={gearScene} />
+      </group>
     </group>
   );
 }

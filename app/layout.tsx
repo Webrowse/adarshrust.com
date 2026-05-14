@@ -18,6 +18,36 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={GeistSans.variable}>
+      <head>
+        {/* Preload critical 3D assets so they download in parallel with JS, not after.
+            These are the dominant first-paint costs — getting them on the wire
+            as early as possible cuts perceived load time substantially. */}
+        <link
+          rel="preload"
+          href="/models/gear_large.glb"
+          as="fetch"
+          type="model/gltf-binary"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/models/gear_medium.glb"
+          as="fetch"
+          type="model/gltf-binary"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/models/gear_small.glb"
+          as="fetch"
+          type="model/gltf-binary"
+          crossOrigin="anonymous"
+        />
+        <link rel="preload" href="/textures/gear_basecolor.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/textures/gear_normal.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/textures/gear_roughness.webp" as="image" type="image/webp" />
+        <link rel="preload" href="/textures/gear_metallic.webp" as="image" type="image/webp" />
+      </head>
       <body className="bg-forge-steel text-forge-bone antialiased font-sans">
         <LenisProvider>{children}</LenisProvider>
       </body>

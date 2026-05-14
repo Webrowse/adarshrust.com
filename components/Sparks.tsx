@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useScrollStore } from '@/lib/scroll-store';
 
@@ -14,19 +14,34 @@ type SparkData = {
   size: number;
 };
 
-/** Emit positions in world-space where gear meshing happens */
-const EMIT_POINTS: [number, number, number][] = [
-  // Left column meshing points (between consecutive gears)
-  [-2.7, 0.45, 0.1],
-  [-2.4, -0.95, 0.25],
-  // Right column
-  [2.7, 0.45, 0.1],
-  [2.4, -0.95, 0.25],
-];
-
 export function Sparks() {
+  const { viewport } = useThree();
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
+
+  // Meshing contact points line up with where adjacent gears touch in
+  // GearColumns.tsx (vertical column, all gears at same x).
+  const emitPoints = useMemo(() => {
+    const inset = Math.min(1.25, Math.max(0.45, viewport.width * 0.15));
+    const xEdge = viewport.width / 2 - inset;
+    const yLarge = 1.4;
+    const yMedium = -0.65;
+    const ySmall = -1.85;
+    // Contact: y_A - R_A = y_B + R_B (lies between gear centers)
+    const yContactLM = (yLarge + yMedium) / 2; // = 0.375  (R_L=1.3, R_M=0.75 → on rim)
+    const yContactMS = (yMedium + ySmall) / 2; // = -1.25
+
+    const points: { pos: [number, number, number]; outSignX: number }[] = [];
+    [-1, 1].forEach((sign) => {
+      const x = sign * xEdge;
+      // outSignX = +1 means sparks fly toward screen center (positive x for left
+      // column where sign=-1, negative x for right column where sign=+1).
+      points.push({ pos: [x, yContactLM, 0.1], outSignX: -sign });
+      points.push({ pos: [x, yContactMS, 0.1], outSignX: -sign });
+    });
+    return points;
+  }, [viewport.width]);
+
   const sparks = useMemo<SparkData[]>(
     () =>
       Array.from({ length: MAX_SPARKS }, () => ({
@@ -70,16 +85,16 @@ export function Sparks() {
       for (let i = 0; i < MAX_SPARKS; i++) {
         if (sparks[i].life <= 0) {
           const ep =
-            EMIT_POINTS[Math.floor(Math.random() * EMIT_POINTS.length)];
+            emitPoints[Math.floor(Math.random() * emitPoints.length)];
+          const [ex, ey, ez] = ep.pos;
           sparks[i].position.set(
-            ep[0] + (Math.random() - 0.5) * 0.12,
-            ep[1] + (Math.random() - 0.5) * 0.08,
-            ep[2] + (Math.random() - 0.5) * 0.05,
+            ex + (Math.random() - 0.5) * 0.12,
+            ey + (Math.random() - 0.5) * 0.08,
+            ez + (Math.random() - 0.5) * 0.05,
           );
-          // outward-ish initial velocity
-          const dir = ep[0] < 0 ? -1 : 1; // sparks fly toward outside
+          // sparks fly inward (toward screen center, away from off-screen edge)
           sparks[i].velocity.set(
-            dir * (Math.random() * 1.4 + 0.4),
+            ep.outSignX * (Math.random() * 1.4 + 0.4),
             (Math.random() - 0.3) * 1.6,
             (Math.random() - 0.5) * 0.5,
           );
