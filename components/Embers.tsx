@@ -3,6 +3,8 @@
 import { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useThemeStore } from '@/lib/theme-store';
+import { THEMES } from '@/lib/themes';
 
 const EMBER_COUNT = 80;
 
@@ -33,6 +35,9 @@ function spawn(): Ember {
 }
 
 export function Embers() {
+  const themeId = useThemeStore((s) => s.themeId);
+  const theme = THEMES[themeId] ?? THEMES.workshop;
+
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
   const embers = useMemo<Ember[]>(
@@ -50,19 +55,21 @@ export function Embers() {
   const material = useMemo(
     () =>
       new THREE.MeshBasicMaterial({
-        color: new THREE.Color('#ff7022'),
+        color: new THREE.Color(theme.sparkColor),
         transparent: true,
         opacity: 0.65,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
         toneMapped: false,
       }),
-    [],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [themeId],
   );
+
   const geometry = useMemo(() => new THREE.SphereGeometry(0.015, 6, 6), []);
 
   useFrame((_, delta) => {
-    if (!meshRef.current) return;
+    if (!meshRef.current || !theme.showEmbers) return;
     for (let i = 0; i < EMBER_COUNT; i++) {
       const e = embers[i];
       e.life += delta;
@@ -88,6 +95,8 @@ export function Embers() {
     }
     meshRef.current.instanceMatrix.needsUpdate = true;
   });
+
+  if (!theme.showEmbers) return null;
 
   return (
     <instancedMesh

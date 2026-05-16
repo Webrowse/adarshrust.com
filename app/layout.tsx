@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { LenisProvider } from '@/components/LenisProvider';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 // Self-hosted fonts (npm packages, no Google Fonts runtime dependency)
 import '@fontsource/orbitron/900.css';
@@ -49,7 +50,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preload" href="/textures/gear_metallic.webp" as="image" type="image/webp" />
       </head>
       <body className="bg-forge-steel text-forge-bone antialiased font-sans">
-        <LenisProvider>{children}</LenisProvider>
+        <ThemeProvider>
+          <LenisProvider>{children}</LenisProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

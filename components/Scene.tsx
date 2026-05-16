@@ -8,40 +8,45 @@ import { GearColumns } from './GearColumns';
 import { Sparks } from './Sparks';
 import { Embers } from './Embers';
 import { PostFX } from './PostFX';
+import { useThemeStore } from '@/lib/theme-store';
+import { THEMES } from '@/lib/themes';
 
 function SceneContents() {
+  const themeId = useThemeStore((s) => s.themeId);
+  const theme = THEMES[themeId] ?? THEMES.workshop;
+
   return (
     <>
-      <fog attach="fog" args={['#0a0807', 6, 22]} />
-      <color attach="background" args={['#0a0807']} />
+      <fog attach="fog" args={[theme.sceneFog, 8, 26]} />
+      <color attach="background" args={[theme.sceneBackground]} />
 
-      <ambientLight intensity={0.06} color={'#ff8033'} />
+      <ambientLight intensity={theme.lightIntensity.ambient} color={theme.lightAmbient} />
       <directionalLight
         position={[5, 6, 3]}
-        intensity={0.6}
-        color={'#ffb070'}
+        intensity={theme.lightIntensity.key}
+        color={theme.lightKey}
       />
       <pointLight
         position={[-5, -1, 2]}
-        intensity={2.4}
-        color={'#ff5a14'}
+        intensity={theme.lightIntensity.forge * 0.7}
+        color={theme.lightForge}
         distance={9}
         decay={2}
       />
       <pointLight
         position={[5, -1, 2]}
-        intensity={2.4}
-        color={'#ff5a14'}
+        intensity={theme.lightIntensity.forge * 0.7}
+        color={theme.lightForge}
         distance={9}
         decay={2}
       />
       <directionalLight
         position={[-4, 3, 5]}
-        intensity={0.18}
-        color={'#9aa0a8'}
+        intensity={theme.lightIntensity.cool}
+        color={theme.lightCool}
       />
 
-      <Environment preset="warehouse" environmentIntensity={0.18} />
+      <Environment preset="warehouse" environmentIntensity={theme.lightIntensity.envMap * 0.4} />
 
       <GearColumns />
 

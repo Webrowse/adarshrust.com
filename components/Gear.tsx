@@ -5,6 +5,8 @@ import { useGLTF, useTexture } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useScrollStore } from '@/lib/scroll-store';
+import { useThemeStore } from '@/lib/theme-store';
+import { THEMES } from '@/lib/themes';
 
 type GearSize = 'large' | 'medium' | 'small';
 
@@ -30,32 +32,36 @@ export function Gear({ size, position, speed = 1, phase = 0 }: Props) {
   const ref = useRef<THREE.Group>(null);
 
   const { scene } = useGLTF(GLB_MAP[size]);
-  const [basecolor, normal, roughness, metallic] = useTexture([
-    '/textures/gear_basecolor.webp',
+  const [normal, roughness, metallic] = useTexture([
     '/textures/gear_normal.webp',
     '/textures/gear_roughness.webp',
     '/textures/gear_metallic.webp',
   ]);
 
   useEffect(() => {
-    [basecolor].forEach((t) => (t.colorSpace = THREE.SRGBColorSpace));
     [normal, roughness, metallic].forEach((t) => (t.colorSpace = THREE.NoColorSpace));
-  }, [basecolor, normal, roughness, metallic]);
+  }, [normal, roughness, metallic]);
 
-  // Build a single shared material with the baked maps
+  const themeId = useThemeStore((s) => s.themeId);
+  const theme = THEMES[themeId] ?? THEMES.workshop;
+
+  // Build a single shared material — basecolor texture removed so theme color drives the tint
   const material = useMemo(() => {
     const m = new THREE.MeshStandardMaterial({
-      map: basecolor,
       normalMap: normal,
       roughnessMap: roughness,
       metalnessMap: metallic,
-      metalness: 1.0, // multiplied by metallic map
-      roughness: 1.0, // multiplied by roughness map
-      envMapIntensity: 0.9,
+      metalness: 1.0,
+      roughness: 1.0,
+      envMapIntensity: theme.lightIntensity.envMap,
     });
+    m.color = new THREE.Color(theme.gearBase);
+    m.emissive = new THREE.Color(theme.gearShadow);
+    m.emissiveIntensity = 0.15;
     m.normalScale.set(0.9, 0.9);
     return m;
-  }, [basecolor, normal, roughness, metallic]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [normal, roughness, metallic, themeId]);
 
   // Apply material to every mesh in the glb scene.
   // The exported GLB nodes carry residual translation/rotation from the

@@ -4,6 +4,8 @@ import { useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useScrollStore } from '@/lib/scroll-store';
+import { useThemeStore } from '@/lib/theme-store';
+import { THEMES } from '@/lib/themes';
 
 const MAX_SPARKS = 220;
 
@@ -18,6 +20,8 @@ export function Sparks() {
   const { viewport } = useThree();
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
+  const themeId = useThemeStore((s) => s.themeId);
+  const theme = THEMES[themeId] ?? THEMES.workshop;
 
   // Meshing contact points line up with where adjacent gears touch in
   // GearColumns.tsx (vertical column, all gears at same x).
@@ -56,7 +60,7 @@ export function Sparks() {
 
   const material = useMemo(() => {
     const m = new THREE.MeshBasicMaterial({
-      color: new THREE.Color('#ffaa44'),
+      color: new THREE.Color(theme.sparkColor),
       transparent: true,
       opacity: 1,
       blending: THREE.AdditiveBlending,
@@ -64,7 +68,8 @@ export function Sparks() {
       toneMapped: false,
     });
     return m;
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [themeId]);
 
   const geometry = useMemo(() => new THREE.TetrahedronGeometry(0.018, 0), []);
 
