@@ -34,24 +34,16 @@ html, body {
 .hero-title {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(40px, 6.5vw, 110px);
-  letter-spacing: 0.14em;
+  font-size: clamp(18px, 5.5vw, 64px);
+  letter-spacing: 0.04em;
   line-height: 1;
   text-transform: uppercase;
-  background: linear-gradient(180deg, var(--gear-shadow) 0%, var(--gear-base) 28%, var(--gear-highlight) 38%, var(--gear-base) 58%, var(--gear-shadow) 100%);
+  background: linear-gradient(180deg, var(--gear-shadow) 0%, var(--gear-base) 35%, var(--gear-highlight) 50%, var(--gear-base) 65%, var(--gear-shadow) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(230, 176, 72, 0.22);
-  filter: drop-shadow(0 0 22px rgba(230, 176, 72, 0.22)) drop-shadow(0 2px 0 rgba(0,0,0,0.25));
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--gear-base) 30%, transparent);
   position: relative;
-}
-.hero-title::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 65%, rgba(230, 176, 72, 0.10) 0%, transparent 60%);
-  mix-blend-mode: screen;
-  pointer-events: none;
 }
 .hero-sub {
   font-family: var(--font-mono);
@@ -194,6 +186,19 @@ html, body {
 @keyframes live-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.55; }
+}
+
+/* === Theme picker === */
+.theme-card {
+  background-color: var(--bg-card);
+  border: 0.6px solid var(--border-soft);
+  transition: border-color 150ms;
+}
+.theme-card:hover:not(.theme-card-active) {
+  border-color: var(--gear-base);
+}
+.theme-card-active {
+  border: 2px solid var(--gear-base);
 }
 
 /* === Film grain overlay === */

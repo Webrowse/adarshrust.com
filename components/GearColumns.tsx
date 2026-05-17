@@ -25,12 +25,11 @@ import { Gear } from './Gear';
 export function GearColumns() {
   const { viewport } = useThree();
 
-  // Bring the gear column INWARD so it fills the side third of the viewport.
-  // On wide screens, inset is ~1.1 (gear bodies clearly on-screen, only outer
-  // teeth clip past the edge). On narrow viewports, inset clamps down so the
-  // gears don't smash into the center content.
-  const inset = Math.min(1.25, Math.max(0.45, viewport.width * 0.15));
-  const xEdge = viewport.width / 2 - inset;
+  // Bigger outset on narrow viewports so gears don't intrude on phones,
+  // smaller outset on wide screens so gears stay close to the cream column.
+  // viewport.width is R3F world-units; ~5 corresponds to the ~640px breakpoint.
+  const outset = viewport.width < 5 ? 0.6 : 0.2;
+  const xEdge = viewport.width / 2 + outset;
 
   // Vertical chain, centered slightly above middle so the chain feels
   // weighted to the upper portion of the viewport (large gear up high).

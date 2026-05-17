@@ -4,39 +4,32 @@ import { ReactNode } from 'react';
 
 type Props = {
   id: string;
-  bay: string; // e.g. "BAY 02"
-  label: string; // e.g. "MANIFESTO"
+  bay: string;
+  label: string;
   children: ReactNode;
-  height?: string; // e.g. '100vh' | '180vh'
 };
 
-export function Section({ id, bay, label, children, height = '100vh' }: Props) {
+export function Section({ id, bay, label, children }: Props) {
   return (
-    <section
-      id={id}
-      style={{ minHeight: height }}
-      className="relative w-full flex flex-col"
-    >
-      {/* Bay header strip */}
-      <div
-        className="mx-auto mt-16 mb-10 flex items-center gap-4 px-4 w-full"
-        style={{ maxWidth: 'min(720px, 56vw)' }}
-      >
-        <span className="block h-px flex-1 bg-forge-oxide/25" />
+    <section id={id} className="relative w-full scroll-mt-16">
+      <div className="flex items-center gap-4 px-8 pt-16 pb-10">
+        <span className="block h-px flex-1" style={{ backgroundColor: 'var(--border-soft)', opacity: 0.5 }} />
         <span
-          className="font-mono text-[10px] tracking-[0.4em] uppercase text-forge-glow/85"
+          className="font-mono text-[10px] tracking-[0.4em] uppercase"
+          style={{ color: 'var(--text-muted)' }}
         >
           {bay}
         </span>
-        <span className="block h-1 w-1 bg-forge-glow/70 rounded-full" />
+        <span className="block h-1 w-1 rounded-full" style={{ backgroundColor: 'var(--gear-base)' }} />
         <span
-          className="font-mono text-[10px] tracking-[0.4em] uppercase text-forge-bone/70"
+          className="font-mono text-[10px] tracking-[0.4em] uppercase"
+          style={{ color: 'var(--text-secondary)' }}
         >
           {label}
         </span>
-        <span className="block h-px flex-1 bg-forge-oxide/25" />
+        <span className="block h-px flex-1" style={{ backgroundColor: 'var(--border-soft)', opacity: 0.5 }} />
       </div>
-      {children}
+      <div className="px-8 pb-20">{children}</div>
     </section>
   );
 }

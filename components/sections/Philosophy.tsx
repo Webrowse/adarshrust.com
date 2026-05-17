@@ -27,25 +27,20 @@ const PRINCIPLES = [
 
 export function Philosophy() {
   return (
-    <Section id="philosophy" bay="BAY 03" label="PRINCIPLES" height="100vh">
-      <div className="flex-1 flex items-center px-6">
-        <div
-          className="mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8"
-          style={{ maxWidth: 'min(720px, 56vw)' }}
-        >
-          {PRINCIPLES.map((p) => (
-            <div key={p.n} className="principle">
-              <div className="flex items-baseline gap-3 mb-2">
-                <span className="font-mono text-[10px] tracking-[0.3em] text-forge-glow">{p.n}</span>
-                <span className="block h-px flex-1 bg-forge-oxide/20" />
-              </div>
-              <h3 className="font-display text-[20px] tracking-[0.08em] uppercase text-forge-bone mb-2">
-                {p.t}
-              </h3>
-              <p className="font-sans text-[13px] leading-[1.7] text-forge-bone/55">{p.d}</p>
+    <Section id="philosophy" bay="BAY 03" label="PRINCIPLES">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
+        {PRINCIPLES.map((p) => (
+          <div key={p.n} className="principle">
+            <div className="flex items-baseline gap-3 mb-2">
+              <span className="font-mono text-[10px] tracking-[0.3em]" style={{ color: 'var(--gear-base)' }}>{p.n}</span>
+              <span className="block h-px flex-1" style={{ backgroundColor: 'var(--border-soft)', opacity: 0.2 }} />
             </div>
-          ))}
-        </div>
+            <h3 className="font-display text-[20px] tracking-[0.08em] uppercase mb-2" style={{ color: 'var(--text-primary)' }}>
+              {p.t}
+            </h3>
+            <p className="font-sans text-[13px] leading-[1.7]" style={{ color: 'var(--text-secondary)' }}>{p.d}</p>
+          </div>
+        ))}
       </div>
     </Section>
   );

@@ -22,21 +22,37 @@ export default function HomePage() {
       <NavBar />
       <StatusBar />
 
-      {/* Document body — scrolls under the fixed canvas */}
-      <main className="relative z-10">
-        <Hero />
-        <Manifesto />
-        <Workshop />
-        <Philosophy />
-        <Contact />
-        <footer className="relative pt-10 pb-24 text-center">
-          <p className="font-mono text-[10px] tracking-[0.32em] uppercase text-forge-dim">
-            MADE WITH GRIT — FOR THE CURIOUS
-          </p>
-          <p className="mt-2 font-mono text-[9px] tracking-[0.32em] uppercase text-forge-dim/50">
-            © {new Date().getFullYear()} ADARSH RUST
-          </p>
-        </footer>
+      {/* Single cream rail — one continuous column for all sections */}
+      <main className="relative z-10 flex justify-center">
+        <div
+          className="w-full"
+          style={{
+            maxWidth: 'min(720px, 92vw)',
+            backgroundColor: 'var(--bg-center)',
+            color: 'var(--text-primary)',
+            boxShadow: '0 0 80px 0 rgba(0,0,0,0.35)',
+          }}
+        >
+          <Hero />
+          <Manifesto />
+          <Workshop />
+          <Philosophy />
+          <Contact />
+          <footer className="pt-10 pb-24 text-center px-8">
+            <p
+              className="font-mono text-[10px] tracking-[0.32em] uppercase"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              MADE WITH GRIT — FOR THE CURIOUS
+            </p>
+            <p
+              className="mt-2 font-mono text-[9px] tracking-[0.32em] uppercase"
+              style={{ color: 'var(--text-muted)', opacity: 0.6 }}
+            >
+              © {new Date().getFullYear()} ADARSH RUST
+            </p>
+          </footer>
+        </div>
       </main>
 
       {/* Film grain over everything */}

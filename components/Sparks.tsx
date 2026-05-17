@@ -26,8 +26,8 @@ export function Sparks() {
   // Meshing contact points line up with where adjacent gears touch in
   // GearColumns.tsx (vertical column, all gears at same x).
   const emitPoints = useMemo(() => {
-    const inset = Math.min(1.25, Math.max(0.45, viewport.width * 0.15));
-    const xEdge = viewport.width / 2 - inset;
+    const outset = viewport.width < 5 ? 0.6 : 0.2;
+    const xEdge = viewport.width / 2 + outset;
     const yLarge = 1.4;
     const yMedium = -0.65;
     const ySmall = -1.85;

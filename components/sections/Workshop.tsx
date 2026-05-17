@@ -5,18 +5,18 @@ import { PORTALS } from '@/lib/portals';
 
 export function Workshop() {
   return (
-    <Section id="workshop" bay="BAY 02" label="THE WORKSHOP" height="auto">
-      <div className="px-6 mx-auto w-full pb-20" style={{ maxWidth: 'min(720px, 56vw)' }}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {PORTALS.map((p) => {
+    <Section id="workshop" bay="BAY 02" label="THE WORKSHOP">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {PORTALS.map((p, i) => {
             const Icon = p.icon;
+            const isLast = i === PORTALS.length - 1;
             return (
               <a
                 key={p.num}
                 href={p.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="portal-card-large group"
+                className={`portal-card-large group${isLast ? ' sm:col-span-2' : ''}`}
               >
                 <div className="flex items-center justify-between mb-6">
                   <span className="num">{p.num}</span>
@@ -35,7 +35,6 @@ export function Workshop() {
               </a>
             );
           })}
-        </div>
       </div>
     </Section>
   );

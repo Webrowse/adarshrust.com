@@ -44,7 +44,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="model/gltf-binary"
           crossOrigin="anonymous"
         />
-        <link rel="preload" href="/textures/gear_basecolor.webp" as="image" type="image/webp" />
         <link rel="preload" href="/textures/gear_normal.webp" as="image" type="image/webp" />
         <link rel="preload" href="/textures/gear_roughness.webp" as="image" type="image/webp" />
         <link rel="preload" href="/textures/gear_metallic.webp" as="image" type="image/webp" />

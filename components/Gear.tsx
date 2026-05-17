@@ -45,19 +45,18 @@ export function Gear({ size, position, speed = 1, phase = 0 }: Props) {
   const themeId = useThemeStore((s) => s.themeId);
   const theme = THEMES[themeId] ?? THEMES.workshop;
 
-  // Build a single shared material — basecolor texture removed so theme color drives the tint
   const material = useMemo(() => {
     const m = new THREE.MeshStandardMaterial({
       normalMap: normal,
       roughnessMap: roughness,
       metalnessMap: metallic,
+      color: new THREE.Color(theme.gearBase),
       metalness: 1.0,
       roughness: 1.0,
       envMapIntensity: theme.lightIntensity.envMap,
+      emissive: new THREE.Color(theme.gearShadow),
+      emissiveIntensity: 0.15,
     });
-    m.color = new THREE.Color(theme.gearBase);
-    m.emissive = new THREE.Color(theme.gearShadow);
-    m.emissiveIntensity = 0.15;
     m.normalScale.set(0.9, 0.9);
     return m;
   // eslint-disable-next-line react-hooks/exhaustive-deps
