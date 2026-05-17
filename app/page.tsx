@@ -6,6 +6,9 @@ import { Manifesto } from '@/components/sections/Manifesto';
 import { Workshop } from '@/components/sections/Workshop';
 import { Philosophy } from '@/components/sections/Philosophy';
 import { Contact } from '@/components/sections/Contact';
+import { SunflowerColumns } from '@/components/SunflowerColumns';
+import { GhibliScene } from '@/components/GhibliScene';
+import { ThemeFilters } from '@/components/ThemeFilters';
 
 // Canvas is client-only; SSR for WebGL is pointless
 const Scene = dynamic(() => import('@/components/Scene').then((m) => m.Scene), {
@@ -17,6 +20,12 @@ export default function HomePage() {
     <>
       {/* WebGL canvas welded to the viewport — gears live here */}
       <Scene />
+
+      {/* SVG sunflowers — renders null unless sunflower theme is active */}
+      <SunflowerColumns />
+
+      {/* Ghibli windmills, clouds, hills, fluff — renders null unless ghibli theme is active */}
+      <GhibliScene />
 
       {/* Fixed UI overlays */}
       <NavBar />
@@ -54,6 +63,9 @@ export default function HomePage() {
           </footer>
         </div>
       </main>
+
+      {/* SVG filter defs — referenced by CSS url(#wobble-soft) anywhere on page */}
+      <ThemeFilters />
 
       {/* Film grain over everything */}
       <div className="grain" />

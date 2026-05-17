@@ -22,7 +22,7 @@ export interface Theme {
   lightForge: string;
   lightCool: string;
   sparkColor: string;
-  gearStyle: '3d' | 'svg-sunflower' | 'svg-mecha';
+  gearStyle: '3d' | 'svg-sunflower' | 'svg-ghibli' | 'svg-mecha';
   borderStyle: 'clean' | 'wobble' | 'sharp';
   useHalftone: boolean;
   showEmbers: boolean;
@@ -76,6 +76,43 @@ export const THEMES: Record<string, Theme> = {
     },
   },
 
+  sunflower: {
+    id: 'sunflower',
+    name: 'Sunflower',
+    description: 'Bright, chunky, kids-show energy',
+    bgSide: '#fff8e8',
+    bgCenter: '#ffffff',
+    bgCard: '#ffffff',
+    textPrimary: '#1a3a52',
+    textSecondary: '#3a5a72',
+    textMuted: '#5a7a92',
+    borderSoft: '#1cb0f6',
+    borderStrong: '#0a90d6',
+    gearBase: '#ffd02f',
+    gearHighlight: '#ffe066',
+    gearShadow: '#6a4825',
+    accent1: '#ff5d5d',
+    accent2: '#5dca3e',
+    sceneBackground: '#fff8e8',
+    sceneFog: '#fff8e8',
+    lightAmbient: '#ffffff',
+    lightKey: '#fffae8',
+    lightForge: '#ffd02f',
+    lightCool: '#cde8f5',
+    sparkColor: '#ffd02f',
+    gearStyle: 'svg-sunflower',
+    borderStyle: 'wobble',
+    useHalftone: false,
+    showEmbers: false,
+    lightIntensity: {
+      ambient: 0.6,
+      key: 0.7,
+      forge: 0,
+      cool: 0.4,
+      envMap: 1.0,
+    },
+  },
+
   verdigris: {
     id: 'verdigris',
     name: 'Verdigris',
@@ -110,6 +147,43 @@ export const THEMES: Record<string, Theme> = {
       forge: 2.0,
       cool: 0.55,
       envMap: 1.5,
+    },
+  },
+
+  ghibli: {
+    id: 'ghibli',
+    name: 'Ghibli',
+    description: 'Windswept meadow, pastoral and dreamy',
+    bgSide: '#a8d8e8',
+    bgCenter: '#fef7ea',
+    bgCard: '#fffdf7',
+    textPrimary: '#2c3e2d',
+    textSecondary: '#4d6050',
+    textMuted: '#7a9878',
+    borderSoft: '#b8d4a8',
+    borderStrong: '#88b880',
+    gearBase: '#88b880',
+    gearHighlight: '#bce0a0',
+    gearShadow: '#3d5a30',
+    accent1: '#f5c030',
+    accent2: '#e890b8',
+    sceneBackground: '#a8d8e8',
+    sceneFog: '#a8d8e8',
+    lightAmbient: '#f0f8ff',
+    lightKey: '#fffae8',
+    lightForge: '#88b880',
+    lightCool: '#c8e8f8',
+    sparkColor: '#fafaf5',
+    gearStyle: 'svg-ghibli',
+    borderStyle: 'clean',
+    useHalftone: false,
+    showEmbers: false,
+    lightIntensity: {
+      ambient: 0.7,
+      key: 0.6,
+      forge: 0,
+      cool: 0.5,
+      envMap: 1.0,
     },
   },
 };

@@ -2,13 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
 import { ThemePicker } from './ThemePicker';
-
-const backdropStyle = {
-  background:
-    'linear-gradient(to bottom, var(--bg-side) 0%, color-mix(in srgb, var(--bg-side) 60%, transparent) 70%, transparent 100%)',
-  backdropFilter: 'blur(6px)',
-};
 
 const LINKS = [
   { label: 'About', href: '#about' },
@@ -29,30 +24,24 @@ export function NavBar() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-30 px-7 md:px-12 py-4 flex items-center justify-between pointer-events-none"
-        style={backdropStyle}
+        className="nav-bar-backdrop fixed top-0 left-0 right-0 z-30 px-7 md:px-12 py-4 flex items-center justify-between pointer-events-none"
       >
         <div className="pointer-events-auto flex items-center gap-3">
-          <span className="terminal-text" style={{ color: 'var(--gear-base)' }}>
+          <Link href="/" className="brand-link" aria-label="ADARSHRUST home">
             ADARSHRUST
-          </span>
-          <span className="terminal-text hidden sm:inline" style={{ color: 'var(--gear-highlight)' }}>
-            //
-          </span>
-          <span className="terminal-text hidden sm:inline" style={{ color: 'var(--gear-highlight)' }}>
-            v0.1 — FORGED
+          </Link>
+          <span
+            className="hidden sm:inline font-mono text-[11px] tracking-[0.32em]"
+            style={{ color: 'var(--ui-text)', opacity: 0.7 }}
+          >
+            // v0.1 — FORGED
           </span>
         </div>
 
         <div className="pointer-events-auto flex items-center gap-4">
           <nav className="hidden md:flex items-center gap-9">
             {LINKS.map((l) => (
-              <a
-                key={l.href}
-                className="nav-link"
-                href={l.href}
-                style={{ color: 'var(--gear-highlight)' }}
-              >
+              <a key={l.href} className="nav-link" href={l.href}>
                 {l.label}
               </a>
             ))}
@@ -63,8 +52,8 @@ export function NavBar() {
             aria-label="Toggle navigation menu"
           >
             {isMenuOpen
-              ? <X size={16} style={{ color: 'var(--gear-highlight)' }} />
-              : <Menu size={16} style={{ color: 'var(--gear-highlight)' }} />
+              ? <X size={16} style={{ color: 'var(--ui-text)' }} />
+              : <Menu size={16} style={{ color: 'var(--ui-text)' }} />
             }
           </button>
         </div>
@@ -81,15 +70,13 @@ export function NavBar() {
       {/* Mobile menu panel */}
       {isMenuOpen && (
         <div
-          className="fixed top-0 left-0 right-0 z-[29] pt-[48px] px-7 pb-6 flex flex-col gap-5 md:hidden pointer-events-auto"
-          style={backdropStyle}
+          className="nav-bar-backdrop fixed top-0 left-0 right-0 z-[29] pt-[48px] px-7 pb-6 flex flex-col gap-5 md:hidden pointer-events-auto"
         >
           {LINKS.map((l) => (
             <a
               key={l.href}
               className="nav-link"
               href={l.href}
-              style={{ color: 'var(--gear-highlight)' }}
               onClick={() => setIsMenuOpen(false)}
             >
               {l.label}

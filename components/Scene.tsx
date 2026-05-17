@@ -14,6 +14,7 @@ import { THEMES } from '@/lib/themes';
 function SceneContents() {
   const themeId = useThemeStore((s) => s.themeId);
   const theme = THEMES[themeId] ?? THEMES.workshop;
+  const is3D = theme.gearStyle === '3d';
 
   return (
     <>
@@ -48,10 +49,10 @@ function SceneContents() {
 
       <Environment preset="warehouse" environmentIntensity={theme.lightIntensity.envMap * 0.4} />
 
-      <GearColumns />
+      {is3D && <GearColumns />}
 
       <Sparks />
-      <Embers />
+      {theme.showEmbers && <Embers />}
 
       <PostFX />
     </>
