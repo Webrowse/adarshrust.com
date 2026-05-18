@@ -188,4 +188,4 @@ export const THEMES: Record<string, Theme> = {
   },
 };
 
-export const DEFAULT_THEME_ID = 'workshop';
+export const DEFAULT_THEME_ID = 'ghibli';
