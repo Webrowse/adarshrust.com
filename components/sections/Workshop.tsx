@@ -16,15 +16,16 @@ export function Workshop() {
                 href={p.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Open ${p.title} — ${p.href.replace('https://', '')}`}
                 className={`portal-card-large group${isLast ? ' sm:col-span-2' : ''}`}
               >
                 <div className="flex items-center justify-between mb-6">
                   <span className="num">{p.num}</span>
-                  <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-forge-dim group-hover:text-forge-glow transition-colors">
+                  <span aria-hidden="true" className="font-mono text-[9px] tracking-[0.3em] uppercase text-forge-dim group-hover:text-forge-glow transition-colors">
                     open ↗
                   </span>
                 </div>
-                <div className="icon-wrap-large">
+                <div className="icon-wrap-large" aria-hidden="true">
                   <Icon size={42} strokeWidth={1.3} />
                 </div>
                 <div className="title-large mt-6">{p.title}</div>

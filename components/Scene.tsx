@@ -66,6 +66,7 @@ export function Scene() {
         antialias: true,
         toneMapping: THREE.ACESFilmicToneMapping,
         outputColorSpace: THREE.SRGBColorSpace,
+        alpha: true, // transparent before first Three.js frame — body bg shows instead of black
       }}
       camera={{ position: [0, 0, 6], fov: 38, near: 0.1, far: 60 }}
       dpr={[1, 1.6]}

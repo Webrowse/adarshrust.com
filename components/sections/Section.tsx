@@ -21,12 +21,12 @@ export function Section({ id, bay, label, children }: Props) {
           {bay}
         </span>
         <span className="block h-1 w-1 rounded-full" style={{ backgroundColor: 'var(--gear-base)' }} />
-        <span
-          className="font-mono text-[10px] tracking-[0.4em] uppercase"
-          style={{ color: 'var(--text-secondary)' }}
+        <h2
+          className="font-mono text-[10px] tracking-[0.4em] uppercase m-0"
+          style={{ color: 'var(--text-secondary)', fontWeight: 'inherit' }}
         >
           {label}
-        </span>
+        </h2>
         <span className="block h-px flex-1" style={{ backgroundColor: 'var(--border-soft)', opacity: 0.5 }} />
       </div>
       <div className="px-8 pb-20">{children}</div>

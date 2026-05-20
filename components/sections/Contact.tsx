@@ -5,7 +5,6 @@ import { Section } from './Section';
 const LINKS = [
   { k: 'github', v: 'github.com/webrowse', href: 'https://github.com/webrowse' },
   { k: 'crates', v: 'crates.io/users/Webrowse', href: 'https://crates.io/users/Webrowse' },
-  { k: 'x', v: '@Adarsh_Web3', href: 'https://x.com/Adarsh_Web3' },
   { k: 'email', v: 'Adarshtechjob@gmail.com', href: 'mailto:Adarshtechjob@gmail.com' },
 ];
 

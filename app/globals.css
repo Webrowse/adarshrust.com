@@ -7,21 +7,21 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-sans: var(--font-geist-sans, system-ui);
 
-  /* SSR fallbacks — ThemeProvider overrides on hydration */
-  --bg-side: #4f4944;
-  --bg-center: #f8f3e6;
-  --bg-card: #fffaee;
-  --text-primary: #2a241e;
-  --text-secondary: #665849;
-  --text-muted: #a87830;
-  --border-soft: #e6b048;
-  --border-strong: #c89a30;
-  --gear-base: #e6b048;
-  --gear-highlight: #f5d088;
-  --gear-shadow: #5a3f12;
-  --accent-1: #80b8d8;
-  --accent-2: #f5a878;
-  --spark-color: #f5d088;
+  /* SSR fallbacks — match default theme (Ghibli) so no flash before inline script runs */
+  --bg-side: #a8d8e8;
+  --bg-center: #fef7ea;
+  --bg-card: #fffdf7;
+  --text-primary: #2c3e2d;
+  --text-secondary: #4d6050;
+  --text-muted: #7a9878;
+  --border-soft: #b8d4a8;
+  --border-strong: #88b880;
+  --gear-base: #88b880;
+  --gear-highlight: #bce0a0;
+  --gear-shadow: #3d5a30;
+  --accent-1: #f5c030;
+  --accent-2: #e890b8;
+  --spark-color: #fafaf5;
 
   /* UI overlay text — defaults to gear-highlight for dark-background themes.
      Override per-theme here (not in ThemeProvider) so CSS wins over inline vars. */
@@ -432,6 +432,65 @@ section { scroll-margin-top: 60px; }
   12%  { opacity: 0.85; }
   88%  { opacity: 0.5;  }
   100% { transform: translate(-14px, -95px) rotate(-240deg); opacity: 0; }
+}
+
+/* === Sunflower scene keyframes === */
+
+@keyframes sf-sun-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sf-cloud-r {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(100vw + 220px)); }
+}
+@keyframes sf-cloud-l {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-100vw - 220px)); }
+}
+@keyframes sf-bird-r {
+  0%   { transform: translateX(-30px)  translateY(0);    }
+  20%  { transform: translateX(22vw)   translateY(-6px); }
+  40%  { transform: translateX(44vw)   translateY(2px);  }
+  60%  { transform: translateX(66vw)   translateY(-4px); }
+  80%  { transform: translateX(88vw)   translateY(1px);  }
+  100% { transform: translateX(110vw)  translateY(0);    }
+}
+@keyframes sf-bird-l {
+  0%   { transform: translateX(30px)   translateY(0);    }
+  20%  { transform: translateX(-22vw)  translateY(-5px); }
+  40%  { transform: translateX(-44vw)  translateY(2px);  }
+  60%  { transform: translateX(-66vw)  translateY(-3px); }
+  80%  { transform: translateX(-88vw)  translateY(1px);  }
+  100% { transform: translateX(-110vw) translateY(0);    }
+}
+@keyframes sf-bird-flap {
+  0%, 100% { d: path("M0 12 Q6 3 12 7 Q18 3 24 12"); } /* wings up   */
+  50%       { d: path("M0 5  Q6 13 12 9 Q18 13 24 5"); } /* wings down */
+}
+@keyframes sf-sway {
+  from { transform: rotate(calc(-1 * var(--sf-sway-deg, 2.5deg))); }
+  to   { transform: rotate(var(--sf-sway-deg, 2.5deg)); }
+}
+@keyframes sf-rabbit-x {
+  from { transform: translateX(-40px); }
+  to   { transform: translateX(110vw); }
+}
+@keyframes sf-rabbit-y {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes sf-bee {
+  0%   { transform: translate(0, 0)   rotate(0deg);   }
+  25%  { transform: translate(20px, -14px) rotate(-8deg);  }
+  50%  { transform: translate(36px, 4px)  rotate(5deg);   }
+  75%  { transform: translate(14px, -20px) rotate(-5deg); }
+  100% { transform: translate(0, 0)   rotate(0deg);   }
+}
+@keyframes sf-pollen {
+  0%   { transform: translate(0, 0);           opacity: 0.85; }
+  60%  { transform: translate(1.5vw, -15vh);   opacity: 0.50; }
+  100% { transform: translate(2.5vw, -26vh);   opacity: 0;    }
 }
 
 /* === Ghibli theme overrides — pastoral meadow === */

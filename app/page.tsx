@@ -6,7 +6,7 @@ import { Manifesto } from '@/components/sections/Manifesto';
 import { Workshop } from '@/components/sections/Workshop';
 import { Philosophy } from '@/components/sections/Philosophy';
 import { Contact } from '@/components/sections/Contact';
-import { SunflowerColumns } from '@/components/SunflowerColumns';
+import { SunflowerScene } from '@/components/SunflowerScene';
 import { GhibliScene } from '@/components/GhibliScene';
 import { ThemeFilters } from '@/components/ThemeFilters';
 
@@ -21,8 +21,8 @@ export default function HomePage() {
       {/* WebGL canvas welded to the viewport — gears live here */}
       <Scene />
 
-      {/* SVG sunflowers — renders null unless sunflower theme is active */}
-      <SunflowerColumns />
+      {/* Sunflower scene — renders null unless sunflower theme is active */}
+      <SunflowerScene />
 
       {/* Ghibli windmills, clouds, hills, fluff — renders null unless ghibli theme is active */}
       <GhibliScene />
