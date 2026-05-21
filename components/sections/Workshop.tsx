@@ -6,13 +6,14 @@ import { useFlagsStore, isEnabled } from '@/lib/flags-store';
 
 export function Workshop() {
   const flags = useFlagsStore((s) => s.flags);
-  const portals = PORTALS.filter((p) => isEnabled(flags, p.flagKey));
+  const loaded = useFlagsStore((s) => s.loaded);
+  const portals = PORTALS.filter((p) => loaded && isEnabled(flags, p.flagKey));
 
   return (
     <Section id="workshop" bay="BAY 02" label="THE WORKSHOP">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {portals.map((p, i) => {
-          const isLast = i === portals.length - 1;
+          const isLast = portals.length % 2 !== 0 && i === portals.length - 1;
           const Icon = p.icon;
           return (
               <a
