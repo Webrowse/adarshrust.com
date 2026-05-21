@@ -2,15 +2,19 @@
 
 import { Section } from './Section';
 import { PORTALS } from '@/lib/portals';
+import { useFlagsStore, isEnabled } from '@/lib/flags-store';
 
 export function Workshop() {
+  const flags = useFlagsStore((s) => s.flags);
+  const portals = PORTALS.filter((p) => isEnabled(flags, p.flagKey));
+
   return (
     <Section id="workshop" bay="BAY 02" label="THE WORKSHOP">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {PORTALS.map((p, i) => {
-            const Icon = p.icon;
-            const isLast = i === PORTALS.length - 1;
-            return (
+        {portals.map((p, i) => {
+          const isLast = i === portals.length - 1;
+          const Icon = p.icon;
+          return (
               <a
                 key={p.num}
                 href={p.href}

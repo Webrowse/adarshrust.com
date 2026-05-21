@@ -3,6 +3,7 @@ import { GeistSans } from 'geist/font/sans';
 import { Fredoka, Bagel_Fat_One, DM_Serif_Display, Quicksand } from 'next/font/google';
 import { LenisProvider } from '@/components/LenisProvider';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { FlagsProvider } from '@/components/FlagsProvider';
 
 const fredoka = Fredoka({
   subsets: ['latin'],
@@ -113,7 +114,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-forge-steel text-forge-bone antialiased font-sans">
         <ThemeProvider>
-          <LenisProvider>{children}</LenisProvider>
+          <FlagsProvider>
+            <LenisProvider>{children}</LenisProvider>
+          </FlagsProvider>
         </ThemeProvider>
       </body>
     </html>

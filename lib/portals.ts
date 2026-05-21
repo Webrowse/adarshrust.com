@@ -17,6 +17,7 @@ export type Portal = {
   desc: string;
   href: string;
   icon: LucideIcon;
+  flagKey: string; // matches the flag key in FFS, e.g. "portal_blog"
 };
 
 export const PORTALS: Portal[] = [
@@ -26,6 +27,7 @@ export const PORTALS: Portal[] = [
     desc: 'Identity, work history, and what I want to build next.',
     href: 'https://portfolio.adarshrust.com',
     icon: Briefcase,
+    flagKey: 'portal_portfolio',
   },
   {
     num: '02',
@@ -33,6 +35,7 @@ export const PORTALS: Portal[] = [
     desc: 'The engineering archive — every shipped repo, with notes.',
     href: 'https://projects.adarshrust.com',
     icon: Hammer,
+    flagKey: 'portal_projects',
   },
   {
     num: '03',
@@ -40,6 +43,7 @@ export const PORTALS: Portal[] = [
     desc: 'A live aggregation of Rust roles across the world.',
     href: 'https://jobs.adarshrust.com',
     icon: FileCode2,
+    flagKey: 'portal_jobs',
   },
   {
     num: '04',
@@ -47,6 +51,7 @@ export const PORTALS: Portal[] = [
     desc: 'Long-form essays on Rust, systems, and craft.',
     href: 'https://blog.adarshrust.com',
     icon: PenLine,
+    flagKey: 'portal_blog',
   },
   {
     num: '05',
@@ -54,6 +59,7 @@ export const PORTALS: Portal[] = [
     desc: 'Raw technical notebook — half-formed ideas, unedited.',
     href: 'https://notes.adarshrust.com',
     icon: NotebookPen,
+    flagKey: 'portal_notes',
   },
   {
     num: '06',
@@ -61,6 +67,7 @@ export const PORTALS: Portal[] = [
     desc: 'Small deployable experiments, live on the web.',
     href: 'https://labs.adarshrust.com',
     icon: FlaskConical,
+    flagKey: 'portal_labs',
   },
   {
     num: '07',
@@ -68,6 +75,7 @@ export const PORTALS: Portal[] = [
     desc: 'Feature flag service — multi-tenant Rust backend.',
     href: 'https://ffs.adarshrust.com',
     icon: ToggleRight,
+    flagKey: 'portal_ffs',
   },
   {
     num: '08',
@@ -75,6 +83,7 @@ export const PORTALS: Portal[] = [
     desc: 'Performance research and benchmarks for Rust crates.',
     href: 'https://bench.adarshrust.com',
     icon: Gauge,
+    flagKey: 'portal_bench',
   },
   {
     num: '09',
@@ -82,5 +91,6 @@ export const PORTALS: Portal[] = [
     desc: 'Cross-project documentation, all in one place.',
     href: 'https://docs.adarshrust.com',
     icon: BookOpen,
+    flagKey: 'portal_docs',
   },
 ];
