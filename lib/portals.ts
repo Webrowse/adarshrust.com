@@ -8,6 +8,7 @@ import {
   ToggleRight,
   Gauge,
   BookOpen,
+  NotebookText,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -92,5 +93,13 @@ export const PORTALS: Portal[] = [
     href: 'https://docs.adarshrust.com',
     icon: BookOpen,
     flagKey: 'portal_docs',
+  },
+  {
+    num: '10',
+    title: 'Todo',
+    desc: 'Personal todo and daily journal — local now, Rust + Postgres soon.',
+    href: 'https://todo.adarshrust.com',
+    icon: NotebookText,
+    flagKey: 'portal_todo',
   },
 ];
