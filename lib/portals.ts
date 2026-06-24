@@ -40,9 +40,9 @@ export const PORTALS: Portal[] = [
   },
   {
     num: '03',
-    title: 'Jobs',
+    title: 'Rust Ecosystem',
     desc: 'A live aggregation of Rust roles across the world.',
-    href: 'https://jobs.adarshrust.com',
+    href: 'https://osspath.com',
     icon: FileCode2,
     flagKey: 'portal_jobs',
   },
