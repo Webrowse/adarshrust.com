@@ -9,14 +9,7 @@ const nextConfig = {
   // Trailing slash makes static-host routing more predictable (CF Pages handles both)
   trailingSlash: false,
 
-  reactStrictMode: false, // R3F + Lenis behave better with this off in dev
-  webpack(config) {
-    config.module.rules.push({
-      test: /\.(glb|gltf)$/,
-      type: 'asset/resource',
-    });
-    return config;
-  },
+  reactStrictMode: true,
 };
 
 export default nextConfig;
