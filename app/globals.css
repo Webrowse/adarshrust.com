@@ -132,7 +132,7 @@ body::after {
   position: fixed;
   z-index: 40;
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--ink-faint);
@@ -234,17 +234,19 @@ body::after {
   margin-top: 2.2rem;
 }
 .compass-link {
+  display: inline-block;
   font-family: var(--mono);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink);
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 5px;
-  transition: color 200ms ease, border-color 200ms ease;
+  border: 1px solid var(--ink);
+  padding: 13px 24px;
+  transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease;
 }
 .compass-link:hover {
-  color: var(--accent);
+  color: var(--paper);
+  background: var(--accent);
   border-color: var(--accent);
 }
 .compass-link:hover .arrow {
@@ -419,15 +421,17 @@ body::after {
   margin: 2rem 0 0;
 }
 .visit {
+  display: inline-block;
   font-family: var(--mono);
   font-size: 13px;
   letter-spacing: 0.14em;
-  border-bottom: 1px solid var(--ink);
-  padding-bottom: 4px;
-  transition: color 200ms ease, border-color 200ms ease;
+  border: 1px solid var(--ink);
+  padding: 13px 24px;
+  transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease;
 }
 .visit:hover {
-  color: var(--accent);
+  color: var(--paper);
+  background: var(--accent);
   border-color: var(--accent);
 }
 .visit:hover .arrow {
@@ -500,10 +504,11 @@ body::after {
 }
 .foot-link {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
+  padding: 8px 0;
   transition: color 200ms ease;
 }
 .foot-link:hover {

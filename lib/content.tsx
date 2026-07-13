@@ -27,32 +27,48 @@ export const PROJECTS: Project[] = [
     urlLabel: 'osspath.com',
     shot: '/screens/osspath.jpg',
     stats: [
-      { value: '2,100+', label: 'repositories mapped' },
-      { value: '109k', label: 'dependency relationships' },
+      { value: '4,600+', label: 'repositories mapped' },
+      { value: 'weekly', label: 'corpus rescans' },
     ],
     body: [
       'Documentation tells you what a crate claims to do. OSSPath starts from the other end: what real projects actually depend on, and how those dependencies connect.',
-      'It maps more than 2,100 real-world Rust repositories into a graph of 109,000 dependency relationships — a way to see which crates carry the ecosystem, what they are used with, and where a new project should look first.',
+      'The corpus is alive — every Rust repository that crosses twenty stars gets pulled in on the weekly scan, 4,600+ of them today and growing. Together they form a dependency graph that shows which crates carry the ecosystem, what they are used with, and where a new project should look first.',
     ],
   },
   {
     slug: 'romyq',
     name: 'Romyq',
     tagline: 'A manager for AI coding agents.',
-    status: 'in development',
+    url: 'https://romyq.com',
+    urlLabel: 'romyq.com',
+    shot: '/screens/romyq.png',
     body: [
       'Coding agents are good at minutes of work and unreliable over hours. Left alone on a long task, they drift — losing the plan, skipping validation, declaring victory early.',
-      'Romyq structures long sessions into an explicit loop: plan, execute, validate. The agent does the work; Romyq holds the shape of the work, so a session that runs all afternoon still lands where it was aimed.',
+      'Romyq turns software ideas into structured lifecycles — phases, governance, readiness tracking, and project memory — so a session that runs all afternoon still lands where it was aimed. Open source and local-first: no cloud, no telemetry.',
     ],
   },
   {
     slug: 'loopupward',
     name: 'LoopUpward',
     tagline: 'A personal operating system.',
-    status: 'in development',
+    url: 'https://loopupward.com',
+    urlLabel: 'loopupward.com',
+    shot: '/screens/loopupward.png',
     body: [
-      'Thoughts, goals, habits, and reflections usually live in four different apps, which is why none of them compound.',
-      'LoopUpward keeps them in one place and in one loop — capture what happened, reflect on it, adjust the goals, repeat. Less a productivity tool, more a flywheel with a text box.',
+      'The videos you watch, the books you save, the quotes that stop you — those thoughts usually disappear. LoopUpward gives them a permanent home, and a path into daily action.',
+      'Thoughts, goals, habits, and reflections live in one place and one loop: capture what happened, reflect on it, adjust the goals, repeat. Less a productivity tool, more a flywheel with a text box.',
+    ],
+  },
+  {
+    slug: 'ffs',
+    name: 'Feature Flag Service',
+    tagline: 'Ship faster. Break nothing.',
+    url: 'https://ffs.adarshrust.com',
+    urlLabel: 'ffs.adarshrust.com',
+    shot: '/screens/ffs.jpg',
+    body: [
+      'Feature flags decouple deploying code from releasing it — toggle features in production without touching code or redeploying.',
+      'FFS is a multi-tenant flag service on a Rust backend: targeting rules that roll out to specific user IDs, emails, or entire domains; environment-aware flags for production, staging, or anything custom; all behind SDK keys and a REST API. Open source and self-hostable.',
     ],
   },
 ];
@@ -93,9 +109,9 @@ export const POSTS: Post[] = [
         <p>
           The previous version of this site rendered spinning WebGL gears with
           physically matched rim velocities. It was fun to build and heavy to
-          load. This version ships no 3D, no scroll library, no feature-flag
-          service — just a sheet of paper and a camera. It turns out restraint
-          is the harder trick.
+          load. This version ships no 3D, no scroll library, no runtime
+          service calls — just a sheet of paper and a camera. It turns out
+          restraint is the harder trick.
         </p>
       </>
     ),
@@ -144,4 +160,10 @@ export const ELSEWHERE: ElsewhereLink[] = [
   { label: 'GitHub', href: 'https://github.com/webrowse', note: 'code' },
   { label: 'crates.io', href: 'https://crates.io/users/Webrowse', note: 'published crates' },
   { label: 'Email', href: 'mailto:great.adarsh@gmail.com', note: 'say hello' },
+];
+
+/** longer-form writing living on its own subdomains */
+export const WRITING_ELSEWHERE: ElsewhereLink[] = [
+  { label: 'Blog', href: 'https://blog.adarshrust.com', note: 'long-form essays' },
+  { label: 'Notes', href: 'https://notes.adarshrust.com', note: 'raw technical notebook' },
 ];

@@ -1,7 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { PROJECTS, POSTS, ELSEWHERE, type Project, type Post } from '@/lib/content';
+import {
+  PROJECTS,
+  POSTS,
+  ELSEWHERE,
+  WRITING_ELSEWHERE,
+  type Project,
+  type Post,
+} from '@/lib/content';
 
 /* ------------------------------------------------------------------ */
 /* Home — (0,0)                                                        */
@@ -197,6 +204,20 @@ export function WritingPanel() {
           </li>
         ))}
       </ul>
+
+      <section className="home-section">
+        <h2 className="kicker rule">More writing</h2>
+        <ul className="elsewhere">
+          {WRITING_ELSEWHERE.map((l) => (
+            <li key={l.label}>
+              <a href={l.href} target="_blank" rel="noreferrer">
+                {l.label}
+              </a>
+              <span className="elsewhere-note">{l.note}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <footer className="panel-foot">
         <a data-plane href="#/" className="foot-link">
