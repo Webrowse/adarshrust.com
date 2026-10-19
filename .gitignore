@@ -5,3 +5,11 @@ out/
 .DS_Store
 *.log
 CLAUDE.md
+
+# Playwright
+test-results/
+playwright-report/
+.playwright/
+
+# TypeScript incremental build info
+*.tsbuildinfo

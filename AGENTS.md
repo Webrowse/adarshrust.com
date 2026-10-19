@@ -1,67 +1,125 @@
-# CLAUDE.md — adarshrust.com
+# AGENTS.md — adarshrust.com
 
-Architecture notes for AI assistants working on this codebase.
+Engineering constraints for anyone, human or automated, changing this
+codebase. The README explains how the site works; this file is the list of
+things not to undo.
 
-## The one idea: the site is a plane
+## 1. The site is one plane. Keep it that way.
 
-Every page exists simultaneously as a panel on a single 2D canvas. Navigation
-does not swap pages — it moves the camera. `components/plane/Plane.tsx` owns
-this entirely:
+Every page is a panel at a coordinate on a single surface. Navigation moves
+the camera. `components/plane/Plane.tsx` owns the grid, the URL hash, the
+history integration, focus and the keyboard.
 
-- Each node has a grid coordinate: home `(0,0)`; projects at `(i+1, 0)` (the
-  BUILT row, to the right); the writing index at `(0,1)` (below home); posts at
-  `(i+1, 1)` (to the right of writing).
-- Panels are absolutely positioned via `translate(x·100%, y·100%)`; the plane
-  wrapper carries one `translate3d(-x·100%, -y·100%, 0)` and a single long
-  transition (`--dur-camera` / `--ease-camera` in globals.css) does all the
-  animating.
-- The URL hash names the coordinate (`#/osspath`, `#/writing/<slug>`). Panels
-  navigate with plain anchors marked `data-plane`; a delegated click handler on
-  `.viewport` converts them to `history.pushState` + a camera move. `popstate`
-  handles browser back/forward, so back plays the move in reverse.
-- Deep links land instantly: transitions stay disabled (`plane--live` class
-  absent) until two rAFs after the initial hash jump.
-- Inactive panels get `inert` + `aria-hidden` (set via ref callback — React 18
-  has no `inert` prop). All panels stay visible so pass-through panels sweep
-  past during multi-cell moves.
-- `Escape` climbs to the parent node; arrow keys walk adjacent grid cells.
+Column 0 is the spine — the five navigation destinations, in rail order.
+Detail panels run to the right of the section they belong to.
 
-**Do not turn this into per-page routes or replace the transition with
-enter/exit animations — the whole point is one continuous surface.**
+**Do not** convert this to per-page routes, and **do not** replace the
+single plane transition with per-panel enter/exit animations. The point is
+one continuous surface.
 
-## Content lives in `lib/content.tsx`
+## 2. Usability outranks the concept
 
-Projects (BUILT row), posts (JSX bodies), and elsewhere links are plain data.
-Adding a project or post automatically places it on the grid and in the lists —
-no component work needed.
+The plane is the presentation, not the mechanism. Three things have to stay
+true, and the Playwright suite enforces all three:
 
-## Screenshots
+- The navigation rail is visible on every panel and every screen size. No
+  destination may depend on discovering a gesture or an animation.
+- Every destination has a real URL that works when pasted, and back and
+  forward replay the moves.
+- With JavaScript off, the static HTML still carries all content and all
+  external links. Panels are server-rendered; keep them that way.
 
-`Shot` in `components/plane/panels.tsx` renders the project's optional `shot`
-image path (files live under `public/screens/`) inside a minimal browser
-frame. Without a `shot`, or if the image 404s, it falls back to a typographic
-cover — checked both via `onError` and a mount-time `naturalWidth` probe,
-because a missing image errors before hydration.
+## 3. Keyboard rules
 
-## Design system
+- **Arrow keys scroll. They do not navigate.** Each panel is its own scroll
+  container and takes focus on arrival so Down/PageDown/Space work. An
+  earlier version bound arrows to camera moves; that made long panels
+  unscrollable from the keyboard. Do not bring it back.
+- Escape climbs to the parent, and is ignored while focus is in an input,
+  textarea, select or contenteditable. Any new global shortcut needs the
+  same guard.
+- Focus moves to the destination panel on navigation, never on first paint.
+  Focusing on load puts focus past the rail and leaves the site's own
+  navigation reachable only by Shift+Tab.
+- "Skip to content" hands focus to the active panel. It is the keyboard
+  route to scrolling from a cold load — not decoration.
 
-One light theme, defined as CSS custom properties in `app/globals.css`
-(`--paper`, `--ink`, `--accent`, hairline `--line`). Fonts via `next/font`
-(build-time self-hosted, no runtime requests): Instrument Serif (display),
-Newsreader (body prose), JetBrains Mono (wayfinding labels/kickers).
-No Tailwind — the reset and every class are hand-written in globals.css.
+## 4. Content is data, and every claim is checkable
 
-The document itself never scrolls (`html, body { overflow: hidden }`); each
-panel scrolls internally via `.panel-scroll`. There is no smooth-scroll
-library and no feature-flag service — both were removed deliberately for load
-speed. Do not reintroduce them.
+All content lives in `lib/content.tsx`. Adding to an array places the item
+on the grid and in the relevant index. No component work, no new route.
 
-## Stack
+The rule for `UPSTREAM` especially:
 
-- Next.js 14 (App Router, static export → `/out`, Cloudflare Pages)
-- React 18, no other runtime dependencies
-- Hand-written CSS (no Tailwind/PostCSS config)
+- One entry per **distinct change**. A backport belongs in its parent
+  entry's `backport` field. Never list a backport as separate work, and
+  never let a count treat it as one.
+- `state` must match the pull request right now. Open work carries a
+  `reviewNote` stating where review actually stands, including objections.
+- `diff` holds the pull request's own numbers.
+- Describe the contribution, not the host project's capabilities. The
+  reader must be able to tell which is which.
+- No performance figures, adoption numbers, test results, endorsements or
+  other impact metrics unless they are published and linked.
 
-The previous incarnation (Three.js gear scenes, theme system, Lenis, FFS
-flags) was removed in the 2026-07 redesign; recover via git history if ever
-needed.
+Before changing any entry, read the pull request.
+
+`POSTS` follows the same principle: list a piece only if it exists and the
+link resolves. Prefer an `href` to the blog over writing filler on the site
+— two posts about this website itself were removed in 2026-10 for exactly
+that reason. Removing a post also means checking nothing still links to it;
+`npm test` has a guard that walks every in-site link and fails on one that
+has no panel.
+
+## 5. Design system
+
+One light theme, custom properties at the top of `app/globals.css`:
+`--paper`, `--ink` / `--ink-soft` / `--ink-faint`, `--line`, `--accent`
+copper. `--moss` is the only second hue and means exactly one thing:
+"this landed" — the merged marker and lines added. Do not spend it
+elsewhere.
+
+Fonts via `next/font`, self-hosted at build time: Instrument Serif
+(display), Newsreader (prose), JetBrains Mono (data — PR numbers, diff
+stats, repository paths, stack lists). Mono is for things that are code or
+figures. It is not a styling device for headings, and labels are sentence
+case, not tracked-out capitals.
+
+Every text/background pair must clear WCAG AA 4.5:1, including on the
+`--paper-deep` hover surface. `--ink-faint` was darkened once already for
+exactly this; check before lightening it.
+
+The document never scrolls. There is no CSS framework, no smooth-scroll
+library, and no runtime service calls. All were removed deliberately. Do
+not reintroduce them, and do not add a dependency that brings one back.
+
+## 6. Checks
+
+```bash
+npm run check    # lint, tsc --noEmit, production build
+npm test         # Playwright, desktop + mobile
+```
+
+Both must pass. Do not disable a rule or weaken an assertion to make them
+pass. The suite covers navigation, history, deep links, Escape, arrow-key
+scrolling, focus order, `inert`, reduced motion, horizontal overflow, link
+accessible names, and that project screenshots actually load.
+
+## 7. Repository hygiene
+
+- No coding-tool or vendor branding in source, comments, UI, metadata,
+  documentation or commit messages. No AI-generated notices, agent
+  signatures, session URLs, or `Co-Authored-By` trailers naming a tool.
+- Local tool configuration stays out of the repository; `.gitignore` covers
+  it.
+- Do not create commits, tags, releases or pull requests unless asked, and
+  do not rewrite published history.
+- Never commit secrets, credentials, environment files or private data.
+- The site's contact address is `hello@adarshrust.com`. Do not publish a
+  personal address anywhere in the UI or metadata.
+
+## 8. Stack
+
+- Next.js 14 (App Router), static export to `out/`, Cloudflare Pages
+- React 18. No other runtime dependencies — keep it that way
+- Hand-written CSS; TypeScript strict; Playwright for tests (dev only)

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Instrument_Serif, Newsreader, JetBrains_Mono } from 'next/font/google';
 
+import { PROFILE } from '@/lib/content';
 import './globals.css';
 
 const instrument = Instrument_Serif({
@@ -28,13 +29,22 @@ const jbMono = JetBrains_Mono({
   display: 'swap',
 });
 
+const DESCRIPTION =
+  'Rust backend and systems engineer. Changes merged into Hickory DNS and oxish, plus the services I build and run.';
+
 export const metadata: Metadata = {
-  title: 'Adarsh — I build software tools',
-  description:
-    'Rust systems, developer infrastructure, and products that turn messy workflows into something usable.',
+  title: 'Adarsh — Rust backend and systems engineer',
+  description: DESCRIPTION,
   metadataBase: new URL('https://adarshrust.com'),
   alternates: { canonical: '/' },
   manifest: '/site.webmanifest',
+  openGraph: {
+    type: 'profile',
+    url: 'https://adarshrust.com',
+    title: 'Adarsh — Rust backend and systems engineer',
+    description: DESCRIPTION,
+    siteName: 'adarshrust.com',
+  },
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
@@ -58,21 +68,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 {
                   '@type': 'Person',
                   '@id': 'https://adarshrust.com/#person',
-                  name: 'Adarsh',
+                  name: PROFILE.name,
                   url: 'https://adarshrust.com',
-                  description: 'I build software tools.',
-                  sameAs: [
-                    'https://github.com/webrowse',
-                    'https://crates.io/users/Webrowse',
+                  jobTitle: PROFILE.role,
+                  description: PROFILE.focus,
+                  email: `mailto:${PROFILE.email}`,
+                  knowsAbout: [
+                    'Rust',
+                    'DNS',
+                    'Backend engineering',
+                    'Systems programming',
+                    'Developer infrastructure',
                   ],
+                  sameAs: [PROFILE.github, PROFILE.crates, 'https://blog.adarshrust.com'],
                 },
                 {
                   '@type': 'WebSite',
                   '@id': 'https://adarshrust.com/#website',
                   url: 'https://adarshrust.com',
                   name: 'Adarsh',
-                  description:
-                    'Rust systems, developer infrastructure, and products that turn messy workflows into something usable.',
+                  description: DESCRIPTION,
                   author: { '@id': 'https://adarshrust.com/#person' },
                 },
               ],
